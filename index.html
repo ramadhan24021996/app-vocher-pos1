@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="VoucherApp - Sistem Manajemen Voucher WiFi Terintegrasi dengan Sistem POS & MikroTik">
+    <title>VoucherApp — WiFi Voucher Management System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path
+                                d="M8.111 16.404a5.5 5.5 0 0 1 7.778 0M12 20h.01M2.05 12.05a14 14 0 0 1 19.9 0M5.636 15.636a9 9 0 0 1 12.728 0" />
+                        </svg>
+                    </div>
+                    <div class="logo-text">
+                        <h1>VoucherApp</h1>
+                        <span>WiFi Management</span>
+                    </div>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" data-page="dashboard" id="nav-dashboard">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="7" rx="1" />
+                        <rect x="14" y="3" width="7" height="7" rx="1" />
+                        <rect x="3" y="14" width="7" height="7" rx="1" />
+                        <rect x="14" y="14" width="7" height="7" rx="1" />
+                    </svg>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="nav-item" data-page="process" id="nav-process">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path
+                            d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
+                    </svg>
+                    <span>Proses Voucher</span>
+                </a>
+                <a href="#" class="nav-item" data-page="vouchers" id="nav-vouchers">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path
+                            d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z" />
+                        <path d="M13 5v2M13 17v2M13 11v2" />
+                    </svg>
+                    <span>Daftar Voucher</span>
+                </a>
+                <a href="#" class="nav-item" data-page="settings" id="nav-settings">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path
+                            d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
+                        <circle cx="12" cy="12" r="3" />
+                    </svg>
+                    <span>Pengaturan</span>
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="sidebar-version">
+                    <span>VoucherApp v2.0</span>
+                    <span class="version-sub">Production Build</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Bar -->
+            <header class="topbar">
+                <button class="menu-toggle" id="menu-toggle">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="3" y1="12" x2="21" y2="12" />
+                        <line x1="3" y1="6" x2="21" y2="6" />
+                        <line x1="3" y1="18" x2="21" y2="18" />
+                    </svg>
+                </button>
+                <div class="topbar-title">
+                    <h2 id="page-title">Dashboard</h2>
+                    <span class="breadcrumb" id="page-breadcrumb">Overview & Statistik</span>
+                </div>
+                <div class="topbar-actions">
+                    <div class="datetime" id="datetime"></div>
+                    <div class="user-avatar">
+                        <span>A</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content Area -->
+            <div class="content-area" id="content-area">
+
+                <!-- ============ DASHBOARD PAGE (PROFESSIONAL REDESIGN) ============ -->
+                <div class="page active" id="page-dashboard">
+
+                    <!-- Premium Server Status Banner -->
+                    <div class="server-banner-new" id="server-banner">
+                        <div class="banner-content">
+                            <div class="banner-indicator-box">
+                                <span class="ring-pulse"></span>
+                                <span class="core-pulse"></span>
+                            </div>
+                            <div class="banner-text">
+                                <h3>Sistem Operasional</h3>
+                                <p id="server-uptime">Semua layanan utama berjalan normal</p>
+                            </div>
+                        </div>
+                        <div class="banner-services">
+                            <div class="service-pill" title="MikroTik Router Connection">
+                                <div class="dot online"></div>
+                                <span>MikroTik</span>
+                            </div>
+                            <div class="service-pill" title="Sistem POS API">
+                                <div class="dot online"></div>
+                                <span>Sistem POS</span>
+                            </div>
+                            <div class="service-pill" title="Local Node.js Backend">
+                                <div class="dot online" id="backend-status"></div>
+                                <span>Backend</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Enhanced Stats Grid -->
+                    <div class="stats-grid-new">
+                        <div class="stat-card-new premium-card accent-primary">
+                            <div class="stat-icon-wrapper">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path
+                                        d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z" />
+                                </svg>
+                            </div>
+                            <div class="stat-details">
+                                <p class="stat-label">Voucher Hari Ini</p>
+                                <h3 class="stat-value" id="stat-vouchers-today">0</h3>
+                                <div class="stat-trend up">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
+                                    </svg>
+                                    Terus bertambah
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="stat-card-new premium-card accent-success">
+                            <div class="stat-icon-wrapper">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path
+                                        d="M8.111 16.404a5.5 5.5 0 0 1 7.778 0M12 20h.01M2.05 12.05a14 14 0 0 1 19.9 0" />
+                                </svg>
+                            </div>
+                            <div class="stat-details">
+                                <p class="stat-label">Device Aktif</p>
+                                <h3 class="stat-value" id="stat-devices-active">0</h3>
+                                <div class="stat-trend neutral">Aktif saat ini</div>
+                            </div>
+                        </div>
+
+                        <div class="stat-card-new premium-card accent-warning">
+                            <div class="stat-icon-wrapper">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="12" y1="1" x2="12" y2="23" />
+                                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                                </svg>
+                            </div>
+                            <div class="stat-details">
+                                <p class="stat-label">Estimasi Revenue</p>
+                                <h3 class="stat-value" id="stat-revenue-today">Rp 0</h3>
+                                <div class="stat-trend up">Hari Ini</div>
+                            </div>
+                        </div>
+
+                        <div class="stat-card-new premium-card accent-info">
+                            <div class="stat-icon-wrapper">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                                    <circle cx="9" cy="7" r="4" />
+                                    <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                                </svg>
+                            </div>
+                            <div class="stat-details">
+                                <p class="stat-label">Total Order</p>
+                                <h3 class="stat-value" id="stat-total-orders">0</h3>
+                                <div class="stat-trend neutral">Lifetime</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Main Dashboard Content Split -->
+                    <div class="dashboard-split-new">
+                        <!-- Chart Area -->
+                        <div class="card chart-card-new premium-card">
+                            <div class="card__header">
+                                <div class="header-title-box">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        width="18" height="18">
+                                        <path d="M3 3v18h18" />
+                                        <path d="m19 9-5 5-4-4-3 3" />
+                                    </svg>
+                                    <h3>Statistik Generate</h3>
+                                </div>
+                                <select id="chart-period" class="select-modern">
+                                    <option value="7">7 Hari</option>
+                                    <option value="14">14 Hari</option>
+                                    <option value="30">30 Hari</option>
+                                </select>
+                            </div>
+                            <div class="card__body">
+                                <canvas id="voucherChart" height="280"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- Side Actions & Activity -->
+                        <div class="dashboard-sidebar-new">
+
+                            <!-- Quick Actions -->
+                            <div class="card quick-actions-new premium-card">
+                                <div class="card__header">
+                                    <div class="header-title-box">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            width="18" height="18">
+                                            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                                        </svg>
+                                        <h3>Aksi Cepat</h3>
+                                    </div>
+                                </div>
+                                <div class="card__body">
+                                    <div class="qa-grid">
+                                        <button class="qa-btn process" onclick="navigateTo('process')"
+                                            id="quick-process">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <polyline points="9 11 12 14 22 4" />
+                                                <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+                                            </svg>
+                                            Buat Voucher
+                                        </button>
+                                        <button class="qa-btn vouchers" onclick="navigateTo('vouchers')"
+                                            id="quick-vouchers">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <path
+                                                    d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z" />
+                                            </svg>
+                                            Kelola Voucher
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Activity Feed -->
+                            <div class="card activity-feed-new premium-card" style="flex: 1;">
+                                <div class="card__header">
+                                    <div class="header-title-box">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            width="18" height="18">
+                                            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+                                        </svg>
+                                        <h3>Aktivitas</h3>
+                                    </div>
+                                    <span class="activity-badge-new" id="activity-count">0</span>
+                                </div>
+                                <div class="card__body" style="padding: 0;">
+                                    <div class="activity-scroller" id="activity-list">
+                                        <!-- Activities populated via JS -->
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div> <!-- closing page-dashboard -->
+
+                <!-- ============ PROCESS PAGE (PROFESSIONAL REDESIGN) ============ -->
+                <div class="page" id="page-process">
+                    <div class="process-container-new">
+
+                        <!-- Top Intro & Input Area -->
+                        <div class="process-header-stack">
+
+                            <!-- Intro Banner -->
+                            <div class="card premium-card process-intro-new">
+                                <div class="intro-content">
+                                    <div class="intro-icon-new">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                                        </svg>
+                                    </div>
+                                    <div class="intro-text-new">
+                                        <h2>Pencetakan Voucher Otomatis</h2>
+                                        <p>Gunakan Order ID dari Sistem POS Anda untuk membuat voucher
+                                            WiFi secara instan.</p>
+                                    </div>
+                                </div>
+                                <div class="mode-selector-new">
+                                    <span class="mode-label">Mode:</span>
+                                    <div class="mode-switches">
+                                        <button class="mode-pill active" id="mode-self"
+                                            onclick="setProcessMode('self')">Cetak Sendiri</button>
+                                        <button class="mode-pill" id="mode-inject"
+                                            onclick="setProcessMode('inject')">Direct
+                                            Injection</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Main Input Area -->
+                            <div class="card premium-card order-input-new">
+                                <div class="input-stack-large">
+                                    <div class="input-wrapper-icon">
+                                        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" width="20" height="20">
+                                            <path d="M4 7V4a2 2 0 0 1 2-2h8.5L20 7.5V20a2 2 0 0 1-2 2h-6" />
+                                            <polyline points="14 2 14 8 20 8" />
+                                            <path d="m10 20-3-3 3-3" />
+                                            <path d="M4 17h7" />
+                                        </svg>
+                                        <input type="text" id="order-id-input"
+                                            placeholder="Scan atau ketik Order ID dari Sistem POS..." autofocus
+                                            autocomplete="off">
+                                    </div>
+                                    <div class="input-actions-new">
+                                        <button class="btn btn--primary btn--xl shadow-glow" id="btn-process"
+                                            onclick="processOrder()">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                stroke-width="2.5" width="24" height="24">
+                                                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                                            </svg>
+                                            PROSES ORDER
+                                        </button>
+                                        <button class="btn btn-manual-toggle" onclick="toggleManualGen()"
+                                            id="btn-toggle-manual" title="Generate Manual">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                stroke-width="2.5" width="24" height="24">
+                                                <path d="M12 5v14M5 12h14" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="hint-text-new">Tekan <strong>Enter</strong> pada
+                                    keyboard untuk memproses secara otomatis.</div>
+                            </div>
+                        </div>
+
+                        <!-- Manual Generation Overlay/Card -->
+                        <div class="card premium-card manual-gen-new hidden" id="manual-gen-card">
+                            <div class="card__header border-bottom">
+                                <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M12 5v14M5 12h14" />
+                                    </svg> Generator Manual</h3>
+                                <button class="btn-close-sm" onclick="toggleManualGen()"><svg viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2">
+                                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                                    </svg></button>
+                            </div>
+                            <div class="card__body">
+                                <div class="config-grid-new">
+                                    <div class="form-group-new">
+                                        <label>Jumlah Voucher</label>
+                                        <input type="number" class="input-modern" id="manual-count" value="1" min="1"
+                                            max="50">
+                                    </div>
+                                    <div class="form-group-new">
+                                        <label>Limit Device</label>
+                                        <input type="number" class="input-modern" id="manual-device" value="1" min="1"
+                                            max="10">
+                                    </div>
+                                    <div class="form-group-new">
+                                        <label>Durasi (Menit)</label>
+                                        <input type="number" class="input-modern" id="manual-duration" value="60">
+                                    </div>
+                                    <div class="form-group-new">
+                                        <label>Keterangan / Label</label>
+                                        <input type="text" class="input-modern" id="manual-note"
+                                            placeholder="Misal: Tamu VIP">
+                                    </div>
+                                </div>
+                                <div class="manual-action-row">
+                                    <button class="btn btn--primary btn--large"
+                                        onclick="generateManualVoucher()">GENERATE &
+                                        AKTIFKAN</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Main Process Pipeline -->
+                        <div class="process-pipeline-new" id="pipeline">
+                            <div class="pipeline-track"></div>
+
+                            <!-- Step 1 -->
+                            <div class="step-card-new" id="step-fetch" data-step="1">
+                                <div class="step-icon">1</div>
+                                <div class="step-content">
+                                    <div class="step-title-row">
+                                        <h4>Fetch & Validasi</h4>
+                                        <span class="step-badge waiting" id="status-fetch">Menunggu</span>
+                                    </div>
+                                    <p class="step-desc">Tarik data dari Sistem POS</p>
+                                    <div class="step-output" id="result-fetch"></div>
+                                </div>
+                            </div>
+
+                            <!-- Step 2 -->
+                            <div class="step-card-new" id="step-config" data-step="2">
+                                <div class="step-icon">2</div>
+                                <div class="step-content">
+                                    <div class="step-title-row">
+                                        <h4>Konfigurasi</h4>
+                                        <span class="step-badge waiting" id="status-config">Menunggu</span>
+                                    </div>
+                                    <p class="step-desc">Penyesuaian parameter kuota</p>
+                                </div>
+                            </div>
+
+                            <!-- Step 3 -->
+                            <div class="step-card-new" id="step-activate" data-step="3">
+                                <div class="step-icon">3</div>
+                                <div class="step-content">
+                                    <div class="step-title-row">
+                                        <h4>Sinkronisasi</h4>
+                                        <span class="step-badge waiting" id="status-activate">Menunggu</span>
+                                    </div>
+                                    <p class="step-desc">Aktifkan ke MikroTik Router</p>
+                                    <div class="step-output" id="result-activate"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Config Card (Step 2 user input if needed) -->
+                        <div class="card premium-card config-prompt-new hidden" id="config-card">
+                            <div class="card__header border-bottom">
+                                <h3>Konfirmasi Parameter Voucher</h3>
+                            </div>
+                            <div class="card__body">
+                                <div class="config-grid-new">
+                                    <div class="form-group-new">
+                                        <label>Jumlah Voucher</label>
+                                        <div class="stepper-input-new">
+                                            <button onclick="changeVal('input-voucher-count', -1)">-</button>
+                                            <input type="number" id="input-voucher-count" value="1" min="1" max="10">
+                                            <button onclick="changeVal('input-voucher-count', 1)">+</button>
+                                        </div>
+                                    </div>
+                                    <div class="form-group-new">
+                                        <label>Device per Voucher</label>
+                                        <div class="stepper-input-new">
+                                            <button onclick="changeVal('input-device-limit', -1)">-</button>
+                                            <input type="number" id="input-device-limit" value="1" min="1" max="5">
+                                            <button onclick="changeVal('input-device-limit', 1)">+</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="config-action-row">
+                                    <button class="btn btn--primary btn--large" id="btn-generate-final"
+                                        onclick="executeFinalSteps()">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                                            <polyline points="22 4 12 14.01 9 11.01" />
+                                        </svg>
+                                        SELESAIKAN PROSES
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Result Success Presentation -->
+                        <div class="card premium-card result-presentation-new hidden" id="voucher-result-card">
+                            <div class="result-success-header">
+                                <div class="success-icon-large pulse-glow">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                    </svg>
+                                </div>
+                                <h3>Voucher Active</h3>
+                            </div>
+
+                            <div class="voucher-ticket-new">
+                                <div class="ticket-header">HOTSPOT ACCESS</div>
+                                <div class="ticket-body">
+                                    <div class="code-wrapper">
+                                        <div class="code-title">KODE VOUCHER</div>
+                                        <div class="code-value" id="voucher-code-display">XXXX-XXXX
+                                        </div>
+                                    </div>
+                                    <div class="qr-box-new" id="voucher-qr-container"></div>
+                                </div>
+                                <div class="ticket-footer" id="voucher-details"></div>
+                            </div>
+
+                            <div class="magic-link-modern" id="magic-link-box">
+                                <div class="ml-left">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71">
+                                        </path>
+                                        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71">
+                                        </path>
+                                    </svg>
+                                    <span class="ml-text" id="magic-link-text">http://wifi.hotspot/login...</span>
+                                </div>
+                                <button class="btn-copy-link" onclick="copyMagicLink()" title="Copy Link">COPY</button>
+                            </div>
+
+                            <div class="result-actions-new">
+                                <button class="btn btn-outline" onclick="printVoucher()">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="6 9 6 2 18 2 18 9"></polyline>
+                                        <path
+                                            d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2">
+                                        </path>
+                                        <rect x="6" y="14" width="12" height="8"></rect>
+                                    </svg>
+                                    PRINT STRUK
+                                </button>
+                                <button class="btn btn--primary" onclick="resetProcess()" id="btn-new-order">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    </svg>
+                                    ORDER BARU
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div> <!-- closing page-process -->
+
+                <!-- ============ VOUCHERS PAGE ============ -->
+                <div class="page" id="page-vouchers">
+                    <div class="process-container-new" style="max-width: 1200px;">
+                        <div class="card premium-card">
+                            <div class="card__header border-bottom"
+                                style="display: flex; justify-content: space-between; align-items: center; padding: 20px 24px;">
+                                <h3
+                                    style="display: flex; align-items: center; gap: 12px; font-size: 1.1rem; font-weight: 700;">
+                                    <div class="stat-icon-wrapper"
+                                        style="background: rgba(var(--accent-primary-rgb), 0.15); color: var(--accent-primary); width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            width="20" height="20">
+                                            <path d="M14 2H6a2 2 0 0 0-2 2v16c0 1.1.9 2 2 2h12a2 2 0 0 0 2-2V8l-6-6z" />
+                                            <path d="M14 3v5h5M16 13H8M16 17H8M10 9H8" />
+                                        </svg>
+                                    </div>
+                                    Daftar Voucher
+                                </h3>
+                                <div class="card__actions" style="display: flex; gap: 12px; align-items: center;">
+                                    <div class="input-wrapper-icon" style="width: 260px;">
+                                        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2"
+                                            style="width: 16px; height: 16px; left: 16px; top: 50%; transform: translateY(-50%); position: absolute; color: var(--text-muted);">
+                                            <circle cx="11" cy="11" r="8" />
+                                            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                                        </svg>
+                                        <input type="text" class="input-modern" placeholder="Cari kode atau order..."
+                                            id="voucher-search" oninput="filterVouchers()"
+                                            style="padding: 10px 14px 10px 42px; font-size: 0.85rem; border-radius: 8px; width: 100%; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.2);">
+                                    </div>
+                                    <select class="input-modern" id="voucher-filter-status" onchange="filterVouchers()"
+                                        style="padding: 10px 14px; font-size: 0.85rem; border-radius: 8px; max-width: 150px; cursor: pointer; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.2); color: #fff;">
+                                        <option value="" style="background: var(--bg-card);">Semua
+                                            Status</option>
+                                        <option value="active" style="background: var(--bg-card);">
+                                            Aktif</option>
+                                        <option value="used" style="background: var(--bg-card);">
+                                            Terpakai</option>
+                                        <option value="expired" style="background: var(--bg-card);">
+                                            Expired</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="card__body" style="padding: 0;">
+                                <div class="table-wrapper" style="margin: 0;">
+                                    <table class="data-table" id="voucher-table"
+                                        style="width: 100%; border-collapse: collapse;">
+                                        <thead>
+                                            <tr
+                                                style="border-bottom: 1px solid rgba(255,255,255,0.08); background: rgba(0,0,0,0.1);">
+                                                <th
+                                                    style="padding: 16px 24px; text-align: left; font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">
+                                                    Kode Voucher</th>
+                                                <th
+                                                    style="padding: 16px 24px; text-align: left; font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">
+                                                    Order ID</th>
+                                                <th
+                                                    style="padding: 16px 24px; text-align: left; font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">
+                                                    Durasi</th>
+                                                <th
+                                                    style="padding: 16px 24px; text-align: left; font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">
+                                                    Status</th>
+                                                <th
+                                                    style="padding: 16px 24px; text-align: left; font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">
+                                                    Dibuat</th>
+                                                <th
+                                                    style="padding: 16px 24px; text-align: right; font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">
+                                                    Aksi</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="voucher-table-body">
+                                            <!-- Populated by JS -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="table-empty hidden" id="voucher-empty"
+                                    style="padding: 60px 20px; text-align: center; color: var(--text-muted); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px;">
+                                    <div
+                                        style="width: 80px; height: 80px; border-radius: 50%; background: rgba(255,255,255,0.03); display: flex; align-items: center; justify-content: center;">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                                            width="40" height="40" style="opacity: 0.5;">
+                                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2">
+                                            </rect>
+                                            <line x1="16" y1="2" x2="16" y2="6"></line>
+                                            <line x1="8" y1="2" x2="8" y2="6"></line>
+                                            <line x1="3" y1="10" x2="21" y2="10"></line>
+                                        </svg>
+                                    </div>
+                                    <p style="font-size: 0.95rem;">Belum ada voucher yang ditemukan.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============ SETTINGS PAGE (PROFESSIONAL REDESIGN) ============ -->
+                <div class="page" id="page-settings">
+                    <div class="settings-container-new">
+
+                        <!-- Left Column: Configurations -->
+                        <div class="settings-main-col">
+
+                            <!-- Section: Integration API -->
+                            <div class="settings-category">
+                                <div class="category-header">
+                                    <div class="category-icon"><svg viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2">
+                                            <path d="M20 7h-9m3 10H5m11-5h-3m7 0h-1m-7-5H5m11 10h3" />
+                                        </svg></div>
+                                    <div class="category-title">
+                                        <h3>Integrasi & API</h3>
+                                        <p>Konfigurasi koneksi ke Sistem POS dan Router MikroTik.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <!-- POS API Card -->
+                                <div class="card setting-card">
+                                    <div class="card__header">
+                                        <h4>Sistem POS API</h4>
+                                        <button class="btn btn--ghost btn--sm" onclick="testRunchiseConn()">Tes
+                                            Koneksi</button>
+                                    </div>
+                                    <div class="card__body">
+                                        <div class="form-grid">
+                                            <div class="form-group">
+                                                <label>Base URL API</label>
+                                                <input type="url" id="setting-runchise-url"
+                                                    value="https://api.runchise.com/v1"
+                                                    placeholder="https://api.runchise.com/v1">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>POS API Key (Bearer Token)</label>
+                                                <input type="password" id="setting-runchise-key"
+                                                    placeholder="••••••••••••••••">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>ID Outlet (Store ID)</label>
+                                                <input type="text" id="setting-runchise-store-id"
+                                                    placeholder="Contoh: ST-001">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- MikroTik Card -->
+                                <div class="card setting-card">
+                                    <div class="card__header">
+                                        <h4>MikroTik Hotspot API</h4>
+                                        <button class="btn btn--ghost btn--sm" onclick="testMikrotikConn()">Tes
+                                            Koneksi</button>
+                                    </div>
+                                    <div class="card__body">
+                                        <div class="form-grid">
+                                            <div class="form-group">
+                                                <label>IP Address Router</label>
+                                                <input type="text" id="setting-mikrotik-ip" placeholder="192.168.88.1">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>DNS Name / SSID</label>
+                                                <input type="text" id="setting-mikrotik-dns" placeholder="wifi.cafe">
+                                            </div>
+                                            <div class="grid-2">
+                                                <div class="form-group">
+                                                    <label>Username</label>
+                                                    <input type="text" id="setting-mikrotik-user" value="admin">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Password</label>
+                                                    <input type="password" id="setting-mikrotik-pass"
+                                                        placeholder="••••••••">
+                                                </div>
+                                            </div>
+                                            <div class="form-group toggle-field-new">
+                                                <div class="toggle-info-new">
+                                                    <label>Gunakan API-SSL (Port 8729)</label>
+                                                    <span class="hint-new">Aktifkan untuk jalur
+                                                        lebih aman</span>
+                                                </div>
+                                                <label class="toggle-switch-new">
+                                                    <input type="checkbox" id="setting-mikrotik-ssl">
+                                                    <span class="slider-new"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Section: Business Rules -->
+                            <div class="settings-category">
+                                <div class="category-header">
+                                    <div class="category-icon"><svg viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2">
+                                            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                                        </svg></div>
+                                    <div class="category-title">
+                                        <h3>Aturan Voucher & Bisnis</h3>
+                                        <p>Tentukan batasan dan perilaku voucher otomatis.</p>
+                                    </div>
+                                </div>
+
+                                <div class="card setting-card">
+                                    <div class="card__body">
+                                        <div class="form-grid">
+                                            <div class="form-group">
+                                                <label>Minimum Belanja (Rp)</label>
+                                                <input type="number" id="setting-min-order" value="30000">
+                                            </div>
+                                            <div class="grid-2">
+                                                <div class="form-group">
+                                                    <label>Durasi (Menit)</label>
+                                                    <input type="number" id="setting-voucher-duration" value="60">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Limit Bandwidth (Mbps)</label>
+                                                    <input type="number" id="setting-bandwidth" value="5">
+                                                </div>
+                                            </div>
+                                            <div class="grid-2">
+                                                <div class="form-group">
+                                                    <label>Format Kode</label>
+                                                    <select id="setting-code-format">
+                                                        <option value="alphanum">Alphanumeric
+                                                            (ABC123)</option>
+                                                        <option value="numeric">Numeric Only
+                                                            (123456)</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Panjang Kode</label>
+                                                    <input type="number" id="setting-code-length" value="6" min="4"
+                                                        max="12">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Maks. Perangkat (Max Devices)</label>
+                                                <input type="number" id="setting-max-devices" value="1" min="1"
+                                                    max="10">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Column: System Status & Info -->
+                        <div class="settings-side-col">
+
+                            <!-- Network Status Card -->
+                            <div class="card status-card-new">
+                                <div class="card__header">
+                                    <h4>Status Server</h4>
+                                    <div class="status-pill online" id="server-status-pill-new">
+                                        Terhubung</div>
+                                </div>
+                                <div class="card__body">
+                                    <div class="info-item-new">
+                                        <span class="info-label-new">Server IP:</span>
+                                        <span class="info-value-new mono" id="local-ip-display">Detecting...</span>
+                                    </div>
+                                    <div class="info-item-new">
+                                        <span class="info-label-new">Hostname:</span>
+                                        <span class="info-value-new" id="network-hostname">—</span>
+                                    </div>
+                                    <div class="info-item-new">
+                                        <span class="info-label-new">Platform:</span>
+                                        <span class="info-value-new" id="network-platform">—</span>
+                                    </div>
+
+                                    <div class="notice-box-new">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            width="14" height="14">
+                                            <circle cx="12" cy="12" r="10" />
+                                            <line x1="12" y1="16" x2="12" y2="12" />
+                                            <line x1="12" y1="8" x2="12.01" y2="8" />
+                                        </svg>
+                                        Gunakan IP Host ini untuk whitelist pada Sistem POS &
+                                        MikroTik.
+                                    </div>
+
+                                    <button class="btn btn--outline btn--sm btn--full" onclick="refreshNetworkInfo()"
+                                        style="margin-top: 16px; border-style: dashed;">
+                                        REFRESH STATUS JARINGAN
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- General & UI Options -->
+                            <div class="card setting-card">
+                                <div class="card__header">
+                                    <h4>Tampilan & Sistem</h4>
+                                </div>
+                                <div class="card__body">
+                                    <div class="form-group">
+                                        <label>Nama Outlet</label>
+                                        <input type="text" id="setting-outlet-name" value="My Cafe">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>WiFi SSID</label>
+                                        <input type="text" id="setting-wifi-ssid" value="CafeWiFi">
+                                    </div>
+
+                                    <div class="toggle-stack-new">
+                                        <div class="toggle-field-new">
+                                            <div class="toggle-info-new">
+                                                <label>Auto-Print Voucher</label>
+                                                <span class="hint-new">Cetak struk setelah
+                                                    generate</span>
+                                            </div>
+                                            <label class="toggle-switch-new">
+                                                <input type="checkbox" id="setting-auto-print" checked>
+                                                <span class="slider-new"></span>
+                                            </label>
+                                        </div>
+                                        <div class="toggle-field-new">
+                                            <div class="toggle-info-new">
+                                                <label>Notifikasi Suara</label>
+                                                <span class="hint-new">Efek suara proses
+                                                    berhasil</span>
+                                            </div>
+                                            <label class="toggle-switch-new">
+                                                <input type="checkbox" id="setting-sound" checked>
+                                                <span class="slider-new"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Global Actions -->
+                            <div class="settings-actions-box">
+                                <button class="btn btn--primary btn--large btn--full" onclick="saveSettings()"
+                                    id="btn-save-settings">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        width="18" height="18">
+                                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
+                                        <polyline points="17 21 17 13 7 13 7 21" />
+                                        <polyline points="7 3 7 8 15 8" />
+                                    </svg>
+                                    SIMPAN PENGATURAN
+                                </button>
+                                <button class="btn btn--ghost btn--full" onclick="resetSettings()"
+                                    style="margin-top:12px; color: var(--accent-danger);">
+                                    RESET KE DEFAULT
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div> <!-- closing content-area -->
+        </main> <!-- closing main-content -->
+    </div> <!-- closing app -->
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- Print Template (hidden) -->
+    <div id="print-template" class="print-template">
+        <div class="print-voucher">
+            <h2 id="print-outlet-name">My Cafe</h2>
+            <p>Free WiFi Voucher</p>
+            <div id="print-qr-container" class="print-qr"></div>
+            <div class="print-code" id="print-voucher-code">XXXX-XXXX</div>
+            <div class="print-details">
+                <p>SSID: <strong id="print-ssid">CafeWiFi</strong></p>
+                <p>Durasi: <strong id="print-duration">60 menit</strong></p>
+                <p>Berlaku: <strong id="print-valid">1 jam sejak aktivasi</strong></p>
+            </div>
+            <p class="print-footer">Terima kasih atas kunjungan Anda!</p>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>

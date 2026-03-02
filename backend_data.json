@@ -1,0 +1,113 @@
+{
+  "logs": [
+    {
+      "time": "03.22.35",
+      "timestamp": "2026-03-02T20:22:35.068Z",
+      "level": "info",
+      "message": "Webhook: http://[YOUR_IP]:3000/webhook/runchise"
+    },
+    {
+      "time": "03.22.35",
+      "timestamp": "2026-03-02T20:22:35.065Z",
+      "level": "info",
+      "message": "Backend Server berjalan di http://localhost:3000"
+    },
+    {
+      "time": "02.54.57",
+      "timestamp": "2026-03-02T19:54:57.780Z",
+      "level": "info",
+      "message": "Webhook: http://[YOUR_IP]:3000/webhook/runchise"
+    },
+    {
+      "time": "02.54.57",
+      "timestamp": "2026-03-02T19:54:57.778Z",
+      "level": "info",
+      "message": "Backend Server berjalan di http://localhost:3000"
+    },
+    {
+      "time": "02.54.26",
+      "timestamp": "2026-03-02T19:54:26.923Z",
+      "level": "info",
+      "message": "Webhook: http://[YOUR_IP]:3000/webhook/runchise"
+    },
+    {
+      "time": "02.54.26",
+      "timestamp": "2026-03-02T19:54:26.921Z",
+      "level": "info",
+      "message": "Backend Server berjalan di http://localhost:3000"
+    },
+    {
+      "time": "01.50.24",
+      "timestamp": "2026-03-02T18:50:24.869Z",
+      "level": "info",
+      "message": "Webhook: http://[YOUR_IP]:3000/webhook/runchise"
+    },
+    {
+      "time": "01.50.24",
+      "timestamp": "2026-03-02T18:50:24.866Z",
+      "level": "info",
+      "message": "Backend Server berjalan di http://localhost:3000"
+    },
+    {
+      "time": "01.24.28",
+      "timestamp": "2026-03-02T18:24:28.433Z",
+      "level": "info",
+      "message": "Webhook: http://[YOUR_IP]:3000/webhook/runchise"
+    },
+    {
+      "time": "01.24.28",
+      "timestamp": "2026-03-02T18:24:28.426Z",
+      "level": "info",
+      "message": "Backend Server berjalan di http://localhost:3000"
+    },
+    {
+      "time": "01.23.52",
+      "timestamp": "2026-03-02T18:23:52.459Z",
+      "level": "info",
+      "message": "Webhook: http://[YOUR_IP]:3000/webhook/runchise"
+    },
+    {
+      "time": "01.23.52",
+      "timestamp": "2026-03-02T18:23:52.456Z",
+      "level": "info",
+      "message": "Backend Server berjalan di http://localhost:3000"
+    },
+    {
+      "time": "01.23.27",
+      "timestamp": "2026-03-02T18:23:27.459Z",
+      "level": "info",
+      "message": "Webhook: http://[YOUR_IP]:3000/webhook/runchise"
+    },
+    {
+      "time": "01.23.27",
+      "timestamp": "2026-03-02T18:23:27.456Z",
+      "level": "info",
+      "message": "Backend Server berjalan di http://localhost:3000"
+    },
+    {
+      "time": "01.15.31",
+      "timestamp": "2026-03-02T18:15:31.085Z",
+      "level": "info",
+      "message": "Endpoint Webhook siap di: http://[YOUR_IP]:3000/webhook/runchise"
+    },
+    {
+      "time": "01.15.31",
+      "timestamp": "2026-03-02T18:15:31.081Z",
+      "level": "info",
+      "message": "Backend Server berjalan di http://localhost:3000"
+    },
+    {
+      "time": "01.03.56",
+      "timestamp": "2026-03-02T18:03:56.250Z",
+      "level": "info",
+      "message": "Endpoint Webhook siap di: http://[YOUR_IP]:3000/webhook/runchise"
+    },
+    {
+      "time": "01.03.56",
+      "timestamp": "2026-03-02T18:03:56.248Z",
+      "level": "info",
+      "message": "Backend Server berjalan di http://localhost:3000"
+    }
+  ],
+  "vouchers": []
+}
